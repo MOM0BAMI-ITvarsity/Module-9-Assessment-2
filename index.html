@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Time App - Global Trendsetter</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/6.6.6/css/flag-icons.min.css">
+</head>
+<body>
+    <header>
+        <h1>World Time - Global Trendsetter</h1>
+        <p id="local">Local Time: Loading...</p>
+    </header>
+
+    <section id="world-time">
+        <h2>World Clocks</h2>
+        <div id="output">Loading world times...</div>
+    </section>
+    <div id="controls">
+        <button id="refresh-time" onclick="displayWorldTime()">Refresh Time</button>
+    </div>
+
+    <script>
+        var timer = setInterval(displayWorldTime, 1000);
+
+        var cities = [
+            {name: "Tokyo", utcOffSet: 9, flag: "jp"},
+            {name: "Delhi", utcOffSet: 5, flag: "in"},
+            {name: "Dhaka", utcOffSet: 6, flag: "bd"},
+            {name: "Mexico City", utcOffSet: -5, flag: "mx"},
+            {name: "Cairo", utcOffSet: 2, flag: "eg"},
+            {name: "Sao Paulo", utcOffSet: -3, flag: "br"},
+            {name: "Sydney", utcOffSet: 11, flag: "au"},
+            {name: "Osaka", utcOffSet: 9, flag: "jp"},
+            {name: "Shanghai", utcOffSet: 8, flag: "cn"},
+            {name: "Karachi", utcOffSet: 5, flag: "pk"},
+            {name: "Buenos Aires", utcOffSet: -3, flag: "ar"},
+            {name: "Kinshasa", utcOffSet: 1, flag: "cd"},
+            {name: "Lagos", utcOffSet: 1, flag: "ng"},
+            {name: "Manila", utcOffSet: 1, flag: "ph"},
+            {name: "Los Angeles", utcOffSet: -7, flag: "us"},
+            {name: "London", utcOffSet: 1, flag: "gb"},
+            {name: "Berlin", utcOffSet: 2, flag: "de"},
+        ];
+
+        cities.sort(compare);
+
+        function compare(a, b) {
+            return a.name.localeCompare(b.name);
+        }
+
+        function getUtcTime() {
+            var dt = new Date();
+            var utcOffset = dt.getTimezoneOffset() * 60000;
+            return new Date(dt.getTime() + utcOffset).getTime();
+        }
+
+        function getCurrentTime(utcOffSet) {
+            var millisecondsInHour = 1000 * 60 * 60;
+            var time = new Date(getUtcTime() + utcOffSet * millisecondsInHour);
+            return time.toLocaleTimeString();
+        }
+
+        function displayWorldTime() {
+            var dt = new Date();
+            document.getElementById("local").innerHTML = "Local Time: " + dt.toLocaleTimeString();
+
+            var output = `
+                <table id="cities">
+                    <tr>
+                        <th>Flag</th>
+                        <th>City</th>
+                        <th>Current Time</th>
+                    </tr>
+            `;
+
+            for (var i = 0; i < cities.length; i++) {
+                output += `
+                    <tr>
+                        <td><span class="fi fi-${cities[i].flag}"></span></td>
+                        <td>${cities[i].name}</td>
+                        <td>${getCurrentTime(cities[i].utcOffSet)}</td>
+                    </tr>
+                `;
+            }
+
+            output += `</table>`;
+            document.getElementById("output").innerHTML = output;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    text-align: center;
+}
+
+#local {
+    font-size: 2rem;
+    margin: 20px 0;
+}
+
+#cities {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+}
+
+#cities th, #cities td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+}
+
+#cities th {
+    background-color: #333;
+    color: #fff;
+}
+
+#cities td {
+    background-color: #fff;
+}
+
+img {
+    width: 30px;
+    height: auto;
+}
